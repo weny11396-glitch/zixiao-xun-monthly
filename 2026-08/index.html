@@ -1,0 +1,995 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="紫小讯月刊·2026年8月刊，汇总紫讯技术8月业务、AI产品、组织学习、企业文化与技术治理动态。">
+  <title>紫小讯月刊｜2026年8月刊</title>
+  <style>
+    :root {
+      --paper: #f4f0e8;
+      --paper-light: #fffdf7;
+      --ink: #17213d;
+      --muted: #6f716f;
+      --blue: #123b82;
+      --blue-soft: #dce7f8;
+      --red: #c94452;
+      --violet: #6d4aa2;
+      --line: rgba(23, 33, 61, .18);
+      --shadow: 0 24px 70px rgba(24, 35, 62, .12);
+      --serif: Georgia, "Noto Serif SC", "Songti SC", SimSun, serif;
+      --sans: "Noto Sans SC", "Microsoft YaHei UI", "Microsoft YaHei", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html {
+      scroll-behavior: smooth;
+      scroll-snap-type: y proximity;
+      scroll-padding-top: 0;
+    }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 8% 8%, rgba(201, 68, 82, .08), transparent 28rem),
+        radial-gradient(circle at 92% 35%, rgba(18, 59, 130, .10), transparent 30rem),
+        var(--paper);
+      font-family: var(--sans);
+      line-height: 1.85;
+      letter-spacing: .02em;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .22;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.78' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.06'/%3E%3C/svg%3E");
+      z-index: 20;
+    }
+
+    a { color: inherit; }
+    .progress {
+      position: fixed;
+      z-index: 50;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--red), var(--blue));
+    }
+
+    .toolbar {
+      position: fixed;
+      z-index: 30;
+      right: 20px;
+      top: 18px;
+      display: flex;
+      gap: 8px;
+    }
+
+    .toolbar button {
+      border: 1px solid rgba(255,255,255,.3);
+      border-radius: 999px;
+      padding: 10px 16px;
+      color: #fff;
+      background: rgba(23, 33, 61, .92);
+      box-shadow: 0 8px 24px rgba(23,33,61,.18);
+      font: 600 13px var(--sans);
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+    }
+
+    .magazine {
+      width: 100%;
+      margin: 0;
+      background: var(--paper-light);
+      box-shadow: none;
+      overflow: hidden;
+    }
+
+    .cover {
+      position: relative;
+      min-height: 100svh;
+      padding: clamp(34px, 6vh, 64px) clamp(34px, 8vw, 136px);
+      overflow: hidden;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      color: #fff;
+      background: #17213d;
+      isolation: isolate;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+    }
+
+    .cover::before {
+      content: "八";
+      position: absolute;
+      right: -3vw;
+      top: -17rem;
+      z-index: -1;
+      color: rgba(255,255,255,.055);
+      font: 900 min(78vw, 780px)/1 var(--serif);
+      transform: rotate(-4deg);
+    }
+
+    .cover::after {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      width: 460px;
+      height: 460px;
+      right: -160px;
+      bottom: -220px;
+      border: 90px solid var(--red);
+      border-radius: 50%;
+      opacity: .9;
+    }
+
+    .masthead {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid rgba(255,255,255,.3);
+      font-size: 13px;
+      letter-spacing: .18em;
+    }
+
+    .brand { font-weight: 800; }
+    .brand i { color: #ef7a83; font-style: normal; }
+    .cover-copy { align-self: center; max-width: 820px; }
+    .issue-no {
+      margin: 0 0 18px;
+      color: #f2a6ac;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      font: 800 clamp(56px, 10vw, 118px)/.95 var(--serif);
+      letter-spacing: -.06em;
+    }
+
+    .cover-subtitle {
+      max-width: 690px;
+      margin: 28px 0 0;
+      font: 400 clamp(19px, 2.5vw, 28px)/1.55 var(--serif);
+      color: rgba(255,255,255,.82);
+    }
+
+    .cover-bottom {
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 28px;
+      align-items: end;
+    }
+
+    .keywords { display: flex; flex-wrap: wrap; gap: 9px; }
+    .keywords span {
+      border: 1px solid rgba(255,255,255,.36);
+      border-radius: 999px;
+      padding: 7px 13px;
+      font-size: 12px;
+    }
+
+    .cover-note {
+      margin: 0;
+      text-align: right;
+      font-size: 12px;
+      color: rgba(255,255,255,.62);
+    }
+
+    .page {
+      position: relative;
+      min-height: 100svh;
+      padding: clamp(42px, 7vh, 80px) clamp(34px, 9vw, 150px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border-bottom: 1px solid var(--line);
+      overflow: hidden;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+    }
+
+    .page::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      opacity: .28;
+      background-image:
+        linear-gradient(rgba(18,59,130,.055) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(18,59,130,.055) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 82%, transparent);
+    }
+
+    .page > * { position: relative; z-index: 1; }
+
+    .digital-nav {
+      position: fixed;
+      z-index: 35;
+      left: 18px;
+      top: 50%;
+      display: grid;
+      gap: 5px;
+      padding: 8px;
+      border: 1px solid rgba(255,255,255,.55);
+      border-radius: 18px;
+      background: rgba(255,255,255,.72);
+      box-shadow: 0 12px 38px rgba(23,33,61,.14);
+      backdrop-filter: blur(16px);
+      transform: translateY(-50%);
+    }
+
+    .digital-nav a {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 11px;
+      color: #707788;
+      font: 800 10px var(--sans);
+      text-decoration: none;
+      transition: .2s ease;
+    }
+
+    .digital-nav a:hover,
+    .digital-nav a.active {
+      color: #fff;
+      background: var(--blue);
+      box-shadow: 0 6px 18px rgba(18,59,130,.28);
+      transform: scale(1.08);
+    }
+
+    .page-kicker {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      color: var(--red);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+    }
+
+    .page-kicker::before { content: ""; width: 38px; height: 2px; background: currentColor; }
+    h2 {
+      max-width: 860px;
+      margin: 0 0 34px;
+      font: 800 clamp(34px, 5vw, 64px)/1.13 var(--serif);
+      letter-spacing: -.035em;
+    }
+
+    h3 { margin: 0; font: 800 clamp(22px, 3vw, 32px)/1.3 var(--serif); }
+    .lede {
+      max-width: 790px;
+      margin: 0;
+      color: #40465a;
+      font: 400 clamp(17px, 2vw, 21px)/1.9 var(--serif);
+    }
+
+    .dropcap::first-letter {
+      float: left;
+      margin: .09em .13em 0 0;
+      color: var(--red);
+      font: 800 4.8em/.75 var(--serif);
+    }
+
+    .editorial-grid {
+      display: grid;
+      grid-template-columns: 1.25fr .75fr;
+      gap: clamp(32px, 6vw, 80px);
+      align-items: start;
+    }
+
+    .contents {
+      padding: 28px;
+      background: #f0eadf;
+      border-top: 4px solid var(--blue);
+    }
+
+    .contents h3 { margin-bottom: 18px; font-size: 20px; }
+    .contents a {
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--line);
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .contents a:hover { color: var(--red); }
+    .headline { position: relative; background: #fff; }
+    .headline-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(270px, .75fr);
+      gap: clamp(36px, 7vw, 92px);
+      align-items: center;
+    }
+
+    .headline-art {
+      min-height: 440px;
+      display: grid;
+      place-items: center;
+      padding: 42px;
+      color: #fff;
+      background:
+        linear-gradient(160deg, transparent 0 44%, rgba(255,255,255,.08) 44% 45%, transparent 45%),
+        var(--blue);
+      clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
+    }
+
+    .headline-art strong {
+      font: 800 clamp(72px, 12vw, 138px)/.85 var(--serif);
+      letter-spacing: -.08em;
+    }
+
+    .headline-art span { display: block; margin-top: 20px; font-size: 13px; letter-spacing: .2em; }
+    .headline-copy p { color: #4f5362; }
+    .pullquote {
+      margin: 34px 0 0;
+      padding: 22px 0 22px 24px;
+      border-left: 4px solid var(--red);
+      font: 700 21px/1.65 var(--serif);
+      color: var(--blue);
+    }
+
+    .source-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+    .source-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 42px;
+      border: 1px solid var(--ink);
+      border-radius: 999px;
+      padding: 8px 15px;
+      color: var(--ink);
+      background: transparent;
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: .2s ease;
+    }
+
+    .source-link::after { content: "↗"; }
+    .source-link:hover { color: #fff; background: var(--ink); transform: translateY(-2px); }
+    .source-link.pending { border-style: dashed; color: var(--muted); }
+
+    .feature { background: #f8f4ec; }
+    .feature-grid {
+      display: grid;
+      grid-template-columns: .82fr 1.18fr;
+      gap: clamp(36px, 7vw, 90px);
+      align-items: start;
+    }
+
+    .shield {
+      position: sticky;
+      top: 32px;
+      aspect-ratio: .83;
+      padding: 52px 34px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      color: #fff;
+      background: var(--violet);
+      clip-path: polygon(50% 0, 94% 15%, 86% 73%, 50% 100%, 14% 73%, 6% 15%);
+      text-align: center;
+    }
+
+    .shield small { letter-spacing: .2em; }
+    .shield strong { font: 900 clamp(44px, 7vw, 82px)/1 var(--serif); }
+    .shield span {
+      font-size: 12px;
+      opacity: .88;
+      letter-spacing: .08em;
+      transform: translateY(-38px);
+    }
+
+    .fact-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      margin: 34px 0;
+      background: var(--line);
+      border: 1px solid var(--line);
+    }
+
+    .fact { padding: 22px 16px; background: var(--paper-light); }
+    .fact strong { display: block; color: var(--blue); font: 800 19px var(--serif); }
+    .fact span { color: var(--muted); font-size: 12px; }
+    .editor-note {
+      margin-top: 24px;
+      padding: 16px 18px;
+      color: #625529;
+      background: #fff4cc;
+      border-left: 3px solid #c79c24;
+      font-size: 13px;
+    }
+
+    .agent-page { background: #17213d; color: #fff; }
+    .agent-page .page-kicker { color: #f2a6ac; }
+    .agent-page h2 { max-width: 930px; }
+    .agent-intro { max-width: 780px; color: rgba(255,255,255,.68); }
+    .agent-steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 48px;
+    }
+
+    .agent-step {
+      min-height: 330px;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.045);
+    }
+
+    .agent-step .date {
+      color: #f2a6ac;
+      font: 800 12px/1 var(--sans);
+      letter-spacing: .08em;
+    }
+    .agent-step h3 {
+      min-height: 2.7em;
+      margin: 18px 0 12px;
+      font: 800 clamp(22px, 1.8vw, 29px)/1.35 var(--sans);
+      letter-spacing: -.035em;
+      text-wrap: balance;
+      word-break: keep-all;
+      overflow-wrap: normal;
+    }
+    .agent-step p {
+      margin: 0;
+      color: rgba(255,255,255,.68);
+      font: 400 13px/1.82 var(--sans);
+      text-wrap: pretty;
+    }
+    .agent-page .source-link { color: #fff; border-color: rgba(255,255,255,.5); }
+    .agent-page .source-link:hover { background: #fff; color: var(--ink); }
+
+    .learning-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+      margin-top: 42px;
+    }
+
+    @media (min-width: 1180px) {
+      .learning-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .story-card h3 { font-size: 23px; }
+    }
+
+    .story-card {
+      position: relative;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid var(--line);
+      background: #fff;
+    }
+
+    .story-card.wide { grid-column: auto; }
+    .story-card .num {
+      color: rgba(18, 59, 130, .18);
+      font: 900 54px/1 var(--serif);
+    }
+
+    .story-card h3 { margin: 12px 0; }
+    .story-card p { margin-bottom: 0; color: #5a5e6a; font-size: 14px; }
+    .story-card .source-links,
+    .agent-step .source-links { margin-top: auto; padding-top: 24px; }
+
+    .recruitment-page {
+      color: #fff;
+      background:
+        radial-gradient(circle at 78% 25%, rgba(255,107,119,.28), transparent 28%),
+        linear-gradient(135deg, #123b82 0 58%, #0d2858 58% 100%);
+    }
+
+    .recruitment-page::after {
+      opacity: .18;
+      background-image:
+        linear-gradient(rgba(255,255,255,.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.1) 1px, transparent 1px);
+    }
+
+    .recruitment-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(360px, .92fr);
+      gap: clamp(48px, 8vw, 130px);
+      align-items: center;
+    }
+
+    .recruitment-page .page-kicker { color: #ffb0b7; }
+    .recruitment-page h2 { color: #fff; margin-bottom: 24px; }
+    .recruitment-page .lede { color: rgba(255,255,255,.78); }
+    .recruitment-page .source-link { color: #fff; border-color: rgba(255,255,255,.58); }
+    .recruitment-page .source-link:hover { color: var(--blue); background: #fff; }
+    .recruitment-aside {
+      padding: 36px;
+      border: 1px solid rgba(255,255,255,.24);
+      border-radius: 24px;
+      background: rgba(255,255,255,.08);
+      box-shadow: 0 24px 80px rgba(0,0,0,.16);
+      backdrop-filter: blur(14px);
+    }
+
+    .recruitment-aside strong {
+      display: block;
+      margin-bottom: 24px;
+      color: #ffb0b7;
+      font: 800 18px var(--serif);
+    }
+
+    .role-cloud { display: flex; flex-wrap: wrap; gap: 10px; }
+    .role-cloud span {
+      padding: 8px 13px;
+      border: 1px solid rgba(255,255,255,.25);
+      border-radius: 999px;
+      font-size: 12px;
+      background: rgba(255,255,255,.06);
+    }
+
+    .city-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 30px;
+    }
+
+    .city-row span {
+      padding: 16px 8px;
+      border-top: 1px solid rgba(255,255,255,.3);
+      text-align: center;
+      font: 800 20px var(--serif);
+    }
+    .tag {
+      display: inline-block;
+      margin-bottom: 12px;
+      color: var(--red);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .15em;
+    }
+
+    .culture { background: #efe7da; }
+    .culture-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(38px, 7vw, 88px);
+    }
+
+    .culture-list { display: grid; gap: 0; }
+    .culture-item {
+      display: grid;
+      grid-template-columns: 76px 1fr;
+      gap: 20px;
+      padding: 24px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .culture-item time { color: var(--red); font: 800 16px var(--serif); }
+    .culture-item h3 { font-size: 21px; }
+    .culture-item p { margin: 8px 0 0; color: #62636a; font-size: 13px; }
+
+    .quote-panel {
+      align-self: center;
+      padding: 48px;
+      color: #fff;
+      background: var(--red);
+    }
+
+    .quote-panel blockquote { margin: 0; font: 800 clamp(28px, 4vw, 46px)/1.5 var(--serif); }
+    .quote-panel p { margin: 28px 0 0; opacity: .76; font-size: 13px; }
+
+    .timeline {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px 34px;
+      margin-top: 38px;
+    }
+
+    .timeline::before { display: none; }
+
+    .timeline-item {
+      position: relative;
+      display: grid;
+      grid-template-columns: 76px 1fr;
+      gap: 16px;
+      min-height: 74px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(255,255,255,.66);
+    }
+
+    .timeline-item::before { display: none; }
+
+    .timeline-item time {
+      align-self: start;
+      padding-top: 2px;
+      text-align: right;
+      color: var(--red);
+      font: 700 12px/1.45 var(--sans);
+      letter-spacing: .03em;
+      white-space: nowrap;
+    }
+    .timeline-copy { padding: 0; border: 0; }
+    .timeline-copy strong { display: block; font: 800 17px var(--serif); }
+    .timeline-copy span { color: var(--muted); font-size: 12px; }
+
+    .source-page { color: rgba(255,255,255,.82); background: #17213d; }
+    .source-page h2 { color: #fff; }
+    .source-list { display: grid; gap: 12px; margin-top: 34px; }
+    .source-list a {
+      display: grid;
+      grid-template-columns: 34px 1fr auto;
+      gap: 16px;
+      align-items: center;
+      padding: 16px 0;
+      border-bottom: 1px solid rgba(255,255,255,.16);
+      text-decoration: none;
+    }
+
+    .source-list a:hover { color: #f2a6ac; }
+    .source-list b { color: #f2a6ac; font: 800 13px var(--sans); }
+    .source-list small { color: rgba(255,255,255,.46); }
+    .link-note {
+      margin-top: 38px;
+      padding: 20px;
+      color: #403b2b;
+      background: #fff4cc;
+      font-size: 13px;
+    }
+
+    footer {
+      padding: 32px clamp(28px, 7vw, 92px);
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      color: var(--muted);
+      background: var(--paper-light);
+      font-size: 11px;
+    }
+
+    [data-reveal] { opacity: 0; transform: translateY(18px); transition: .6s ease; }
+    [data-reveal].revealed { opacity: 1; transform: none; }
+
+    @media (min-width: 781px) and (max-height: 900px) {
+      .page { padding-block: 34px; }
+      h2 { font-size: clamp(30px, 4.2vw, 52px); margin-bottom: 22px; }
+      .page-kicker { margin-bottom: 12px; }
+      .lede { font-size: 17px; line-height: 1.72; }
+      .headline-art { min-height: 350px; }
+      .agent-steps { margin-top: 28px; }
+      .agent-step { min-height: 260px; padding: 22px; }
+      .learning-grid { margin-top: 25px; }
+      .story-card { padding: 22px; }
+      .story-card .num { font-size: 40px; }
+      .culture-item { padding: 13px 0; }
+      .quote-panel { padding: 34px; }
+      .timeline { margin-top: 20px; gap: 7px 24px; }
+      .timeline-item { min-height: 64px; padding: 10px 12px; }
+      .source-list { margin-top: 18px; gap: 6px; }
+      .source-list a { padding: 10px 0; }
+      .link-note { margin-top: 20px; padding: 14px; }
+    }
+
+    @media (max-width: 780px) {
+      .magazine { width: 100%; margin: 0; }
+      .cover { min-height: 680px; }
+      html { scroll-snap-type: none; }
+      .digital-nav { display: none; }
+      .toolbar { top: auto; right: 12px; bottom: 12px; }
+      .page { min-height: auto; padding: 64px 24px; overflow: clip; }
+      .cover-bottom, .editorial-grid, .headline-grid, .feature-grid, .culture-layout { grid-template-columns: 1fr; }
+      .recruitment-layout { grid-template-columns: 1fr; }
+      .cover-note { text-align: left; }
+      .headline-art { min-height: 280px; order: -1; }
+      .shield { position: relative; width: min(310px, 100%); margin: 0 auto; }
+      .agent-steps { grid-template-columns: 1fr; }
+      .agent-step { min-height: 0; }
+      .learning-grid { grid-template-columns: 1fr; }
+      .story-card.wide { grid-column: auto; }
+      .timeline { grid-template-columns: 1fr; }
+      .fact-row { grid-template-columns: 1fr; }
+      .quote-panel { padding: 34px; }
+      .source-list a { grid-template-columns: 28px 1fr; }
+      .source-list small { grid-column: 2; }
+      footer { flex-direction: column; }
+    }
+
+    @media print {
+      @page { size: A4; margin: 12mm; }
+      body { background: #fff; }
+      body::before, .toolbar, .progress { display: none; }
+      .magazine { width: 100%; margin: 0; box-shadow: none; }
+      .cover { min-height: 260mm; break-after: page; }
+      .page { break-inside: avoid; padding: 18mm 12mm; }
+      .source-link { color: var(--ink) !important; background: transparent !important; }
+      [data-reveal] { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress" id="progress"></div>
+  <div class="toolbar" aria-label="页面工具">
+    <button type="button" onclick="window.print()">打印 / 导出 PDF</button>
+  </div>
+  <nav class="digital-nav" aria-label="全屏页导航">
+    <a href="#top" data-section="top" title="封面">00</a>
+    <a href="#preface" data-section="preface" title="卷首语">01</a>
+    <a href="#headline" data-section="headline" title="SIF月度头条">02</a>
+    <a href="#compliance" data-section="compliance" title="LinkFox合规">03</a>
+    <a href="#agent" data-section="agent" title="紫鸟 Agent">04</a>
+    <a href="#learning" data-section="learning" title="组织成长">05</a>
+    <a href="#recruitment" data-section="recruitment" title="校园招聘">06</a>
+    <a href="#culture" data-section="culture" title="文化温度">07</a>
+    <a href="#timeline" data-section="timeline" title="八月时间轴">08</a>
+    <a href="#sources" data-section="sources" title="来源直达">09</a>
+  </nav>
+
+  <main class="magazine">
+    <header class="cover" id="top">
+      <div class="masthead">
+        <span class="brand">ZIXUN <i>紫讯</i></span>
+        <span>INTERNAL MONTHLY · 2026</span>
+      </div>
+      <div class="cover-copy">
+        <p class="issue-no">VOL. 01 / AUGUST</p>
+        <h1>紫小讯<br>月刊</h1>
+        <p class="cover-subtitle">AI能力向产品、业务与组织深处生长。<br>记录紫讯人的八月进展。</p>
+      </div>
+      <div class="cover-bottom">
+        <div class="keywords" aria-label="本期关键词">
+          <span>AI进化</span><span>业务拓展</span><span>合规底座</span><span>共同成长</span>
+        </div>
+        <p class="cover-note">2026年8月刊<br>内容截至 2026.08.31</p>
+      </div>
+    </header>
+
+    <section class="page" id="preface">
+      <div class="editorial-grid">
+        <div data-reveal>
+          <div class="page-kicker">Editor's Letter · 卷首语</div>
+          <h2>在学习、连接与生长中，继续向前</h2>
+          <p class="lede dropcap">八月，紫讯在学习、连接与生长中持续向前。从AI应用实践案例分享会，到紫鸟 Agent连续升级，再到SIF项目正式加入，公司正加快AI能力向产品、业务与日常工作流的深度融入。</p>
+          <p class="lede" style="margin-top:18px">与此同时，紫讯圈上线、导师推荐活动启动、年度健康礼包发放，也让组织连接更紧密、文化表达更鲜活。这一期《紫小讯月刊》，让我们一起回顾属于紫讯人的八月关键词：AI进化、业务拓展、合规底座、共同成长。</p>
+        </div>
+        <nav class="contents" aria-label="本期目录" data-reveal>
+          <h3>本期目录</h3>
+          <a href="#headline"><b>01</b><span>月度头条：SIF加入紫讯</span></a>
+          <a href="#compliance"><b>02</b><span>合规里程碑：模特视觉大模型</span></a>
+          <a href="#agent"><b>03</b><span>产品进化：紫鸟 Agent三连升</span></a>
+          <a href="#learning"><b>04</b><span>组织成长：让AI成为工作能力</span></a>
+          <a href="#recruitment"><b>05</b><span>人才发展：2027届校园招聘</span></a>
+          <a href="#culture"><b>06</b><span>文化温度：连接每一个紫讯人</span></a>
+          <a href="#timeline"><b>07</b><span>八月大事记</span></a>
+        </nav>
+      </div>
+    </section>
+
+    <section class="page headline" id="headline">
+      <div class="headline-grid">
+        <div class="headline-copy" data-reveal>
+          <div class="page-kicker">Cover Story · 月度头条</div>
+          <h2>紫讯AI产品版图再拓展：SIF正式加入紫讯大家庭</h2>
+          <p>公司完成对SIF项目的收购。作为聚焦亚马逊广告与流量洞察的专业工具，SIF将纳入AI产品中心统一管理，原团队成员正式加入紫讯大家庭。</p>
+          <p>此次整合进一步补充公司在关键词研究、竞品流量拆解和广告洞察等方面的能力，为AI驱动的跨境电商经营体系增添新的数据与产品支点。</p>
+          <blockquote class="pullquote">从工具能力到数据能力，从单点洞察到智能经营，新的协同由此开启。</blockquote>
+          <div class="source-links">
+            <a class="source-link" href="https://www.sif.com/" target="_blank" rel="noopener noreferrer">直达 SIF 官网</a>
+          </div>
+        </div>
+        <div class="headline-art" aria-label="SIF专题视觉" data-reveal>
+          <div><strong>SIF</strong><span>AD &amp; TRAFFIC INTELLIGENCE</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="page feature" id="compliance">
+      <div class="feature-grid">
+        <div class="shield" data-reveal>
+          <small>AI COMPLIANCE</small>
+          <strong>合规<br>上线</strong>
+          <span>MODEL VISUAL · LINKFOX AI</span>
+        </div>
+        <div data-reveal>
+          <div class="page-kicker">Milestone · 合规里程碑</div>
+          <h2>LinkFox AI“模特视觉”大模型，筑牢可信视觉服务底座</h2>
+          <p class="lede">本次“模特视觉”大模型顺利完成福建省生成式人工智能服务备案，是紫讯技术在AI合规建设上的重要进展。这份备案成果，凝聚了PMO与业务团队一年来的协同投入与持续推进。</p>
+          <div class="fact-row" aria-label="备案关键信息">
+            <div class="fact"><strong>模特视觉</strong><span>大模型名称</span></div>
+            <div class="fact"><strong>2026.03.16</strong><span>权威公告所列备案时间</span></div>
+            <div class="fact"><strong>Fujian-…0009</strong><span>备案编号尾号</span></div>
+          </div>
+          <p>这不仅是一次产品合规动作，更是LinkFox AI底层技术能力走向规模化服务的重要基础。依托视觉大模型，LinkFox AI将继续服务AI模特、商品图、营销素材等跨境电商视觉生产场景，帮助卖家提升内容效率与商品表现。</p>
+          <div class="source-links">
+            <a class="source-link" href="https://www.fjwx.gov.cn/gs/20260423/3022036.html" target="_blank" rel="noopener noreferrer">福建网信网备案公告</a>
+            <a class="source-link" href="https://www.linkfox.com/" target="_blank" rel="noopener noreferrer">直达 LinkFox AI</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="page agent-page" id="agent">
+      <div class="page-kicker">Product Evolution · 产品进化</div>
+      <h2>从“看懂数据”到“进入团队”，紫鸟 Agent连续升级</h2>
+      <p class="agent-intro">8月，紫鸟 Agent围绕数据、团队和执行三层能力持续进化，推动AI从一次对话走进跨境企业的真实工作流。</p>
+      <div class="agent-steps">
+        <article class="agent-step" data-reveal>
+          <span class="date">08.05</span>
+          <h3>打通多源经营数据</h3>
+          <p>连接SP-API、Ads API、紫鸟店铺数据、企业自有报表及第三方工具，让经营分析从固定报表转向自然语言按需拆解。</p>
+          <div class="source-links"><a class="source-link" href="https://www.superbrowser.com/blog/4662.html" target="_blank" rel="noopener noreferrer">紫鸟官网推文</a></div>
+        </article>
+        <article class="agent-step" data-reveal>
+          <span class="date">08.18</span>
+          <h3>升级企业级团队能力</h3>
+          <p>新增成员权限、自定义模型、积分明细与SP-API最小授权能力，帮助AI从少数人尝试走向团队规模化使用。</p>
+          <div class="source-links"><a class="source-link" href="https://www.superbrowser.com/blog/4710.html" target="_blank" rel="noopener noreferrer">紫鸟官网推文</a></div>
+        </article>
+        <article class="agent-step" data-reveal>
+          <span class="date">08.26</span>
+          <h3>两分钟巡检店铺健康</h3>
+          <p>“AMZ店铺绩效健康快报”Skill自动抓取风险信号、生成分级报告，还可定时执行并推送至飞书或钉钉。</p>
+          <div class="source-links"><a class="source-link" href="https://www.superbrowser.com/blog/6109.html" target="_blank" rel="noopener noreferrer">紫鸟官网推文</a></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="page" id="learning">
+      <div class="page-kicker">AI-Native Organization · 组织成长</div>
+      <h2>让AI实践被看见、被分享、被复用</h2>
+      <p class="lede">两期案例分享会持续沉淀一线经验，让AI实践变成可交流、可复用的组织能力。</p>
+      <div class="learning-grid">
+        <article class="story-card" data-reveal>
+          <span class="tag">培训学习 · 8月4日</span>
+          <div class="num">07</div>
+          <h3>第七期紫讯AI应用实践案例分享会</h3>
+          <p>福州西沙群岛会议室，线上线下同步开展，让一线实践变成可复用的组织经验。</p>
+          <div class="source-links"><a class="source-link" href="https://yxgb3sicy7.feishu.cn/wiki/Ff4CwTaBDiszrkkK2q4cB6Ymnkd?from=from_parent_docx" target="_blank" rel="noopener noreferrer">直达第七期案例分享会</a></div>
+        </article>
+        <article class="story-card" data-reveal>
+          <span class="tag">培训学习 · 8月12日</span>
+          <div class="num">08</div>
+          <h3>第八期紫讯AI应用实践案例分享会</h3>
+          <p>多个会场线上同步参与，共享岗位场景中的AI应用方法与实践经验。</p>
+          <div class="source-links"><a class="source-link" href="https://yxgb3sicy7.feishu.cn/wiki/GvnWwIySniERPfko6IvctD6Inqc" target="_blank" rel="noopener noreferrer">直达第八期案例分享会</a></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="page recruitment-page" id="recruitment">
+      <div class="recruitment-layout">
+        <div data-reveal>
+          <div class="page-kicker">Campus Recruitment · 人才发展</div>
+          <h2>紫讯2027届校园招聘正式启动</h2>
+          <p class="lede">“启航星程·智领全球”。紫讯面向2027届应届毕业生启动“启航星计划”，聚焦AI产研、算法、数据分析等关键方向，寻找具备AI Native思维的新生力量。</p>
+          <p style="max-width:720px;color:rgba(255,255,255,.7)">从第一天起，每一份努力、每一行代码、每一个策略，都将牵引业务向上生长。工作地点覆盖福州、深圳、厦门。</p>
+          <div class="source-links">
+            <a class="source-link" href="https://mp.weixin.qq.com/s/JvsYBuvFApVNdwzSFd8U6A" target="_blank" rel="noopener noreferrer">阅读官方招聘推文</a>
+            <a class="source-link" href="https://fzzixun.zhiye.com/jobs?activityGuid=caf7bf16-0398-4084-9278-32858b737084" target="_blank" rel="noopener noreferrer">进入校招投递</a>
+          </div>
+        </div>
+        <aside class="recruitment-aside" data-reveal>
+          <strong>七大AI方向</strong>
+          <div class="role-cloud">
+            <span>AI Agent</span><span>AI应用</span><span>AI全栈</span><span>底层能力</span><span>AI产品</span><span>AI数据分析</span><span>AIGC算法</span>
+          </div>
+          <div class="city-row"><span>福州</span><span>深圳</span><span>厦门</span></div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="page culture" id="culture">
+      <div class="culture-layout">
+        <div data-reveal>
+          <div class="page-kicker">People &amp; Culture · 文化温度</div>
+          <h2>让每一次分享、感谢与关怀，都被看见</h2>
+          <div class="culture-list">
+            <article class="culture-item">
+              <time>08.05</time><div><h3>「紫讯圈」上线公测</h3><p>支持实名或匿名发布，以首帖奖和优质内容奖鼓励员工分享。</p></div>
+            </article>
+            <article class="culture-item">
+              <time>08.12</time><div><h3>年度健康大礼包发放</h3><p>面向全体员工，把组织关怀送到每个人手中。</p></div>
+            </article>
+            <article class="culture-item">
+              <time>08.20</time><div><h3>“最佳导师推荐”活动启动</h3><p>以“谢谢你，成为我的职场引路人”为主题，发现并致敬优秀导师。</p></div>
+            </article>
+          </div>
+          <div class="source-links"><a class="source-link" href="https://yxgb3sicy7.feishuapp.com/app/app_17a329jdde9" target="_blank" rel="noopener noreferrer">直达紫讯圈</a></div>
+        </div>
+        <aside class="quote-panel" data-reveal>
+          <blockquote>“谢谢你，成为我的职场引路人。”</blockquote>
+          <p>教师节“最佳导师推荐”活动主题</p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="page" id="timeline">
+      <div class="page-kicker">August Timeline · 八月大事记</div>
+      <h2>一个月，十二个值得记录的坐标</h2>
+      <div class="timeline">
+        <div class="timeline-item"><time>08.04</time><div class="timeline-copy"><strong>第七期紫讯AI应用实践案例分享会</strong><span>AI学习 · 福州及线上</span></div></div>
+        <div class="timeline-item"><time>08.05</time><div class="timeline-copy"><strong>紫讯圈上线公测</strong><span>企业文化 · 内部连接</span></div></div>
+        <div class="timeline-item"><time>08.05</time><div class="timeline-copy"><strong>紫鸟 Agent经营数据能力升级</strong><span>AI产品 · 多源数据</span></div></div>
+        <div class="timeline-item"><time>08.12</time><div class="timeline-copy"><strong>第八期紫讯AI应用实践案例分享会</strong><span>AI学习 · 实践共享</span></div></div>
+        <div class="timeline-item"><time>08.12</time><div class="timeline-copy"><strong>年度健康大礼包发放</strong><span>员工关怀 · 健康福利</span></div></div>
+        <div class="timeline-item"><time>08.MID</time><div class="timeline-copy"><strong>2027届校园招聘启动</strong><span>人才发展 · 启航星计划</span></div></div>
+        <div class="timeline-item"><time>08.17</time><div class="timeline-copy"><strong>GitLab Access Token规范化治理</strong><span>技术治理 · 安全合规</span></div></div>
+        <div class="timeline-item"><time>08.18</time><div class="timeline-copy"><strong>紫鸟 Agent企业级能力升级</strong><span>AI产品 · 团队权限与安全</span></div></div>
+        <div class="timeline-item"><time>08.20</time><div class="timeline-copy"><strong>教师节“最佳导师推荐”活动启动</strong><span>企业文化 · 导师传承</span></div></div>
+        <div class="timeline-item"><time>08.26</time><div class="timeline-copy"><strong>紫鸟 Agent上线店铺健康巡检能力</strong><span>AI产品 · 自动化风控</span></div></div>
+        <div class="timeline-item"><time>战略</time><div class="timeline-copy"><strong>公司收购SIF项目</strong><span>业务战略 · 产品版图拓展</span></div></div>
+        <div class="timeline-item"><time>合规</time><div class="timeline-copy"><strong>“模特视觉”大模型完成生成式人工智能服务备案</strong><span>AI合规 · PMO与业务团队协同推进</span></div></div>
+      </div>
+    </section>
+
+    <section class="page source-page" id="sources">
+      <div class="page-kicker">Source Desk · 来源直达</div>
+      <h2>延伸阅读与信息来源</h2>
+      <div class="source-list">
+        <a href="https://www.sif.com/" target="_blank" rel="noopener noreferrer"><b>01</b><span>SIF官网：广告与流量洞察产品信息</span><small>sif.com ↗</small></a>
+        <a href="https://www.fjwx.gov.cn/gs/20260423/3022036.html" target="_blank" rel="noopener noreferrer"><b>02</b><span>福建网信网：“模特视觉”大模型备案公告</span><small>fjwx.gov.cn ↗</small></a>
+        <a href="https://www.linkfox.com/" target="_blank" rel="noopener noreferrer"><b>03</b><span>LinkFox AI官网：AI模特与商品视觉服务</span><small>linkfox.com ↗</small></a>
+        <a href="https://www.superbrowser.com/blog/4662.html" target="_blank" rel="noopener noreferrer"><b>04</b><span>紫鸟 Agent：多源经营数据能力升级</span><small>superbrowser.com ↗</small></a>
+        <a href="https://www.superbrowser.com/blog/4710.html" target="_blank" rel="noopener noreferrer"><b>05</b><span>紫鸟 Agent：企业级团队能力升级</span><small>superbrowser.com ↗</small></a>
+        <a href="https://www.superbrowser.com/blog/6109.html" target="_blank" rel="noopener noreferrer"><b>06</b><span>紫鸟 Agent：两分钟巡检店铺健康</span><small>superbrowser.com ↗</small></a>
+        <a href="https://fzzixun.zhiye.com/jobs?activityGuid=caf7bf16-0398-4084-9278-32858b737084" target="_blank" rel="noopener noreferrer"><b>07</b><span>紫讯2027届校园招聘入口</span><small>fzzixun.zhiye.com ↗</small></a>
+        <a href="https://mp.weixin.qq.com/s/JvsYBuvFApVNdwzSFd8U6A" target="_blank" rel="noopener noreferrer"><b>08</b><span>紫讯2027届校园招聘官方推文</span><small>mp.weixin.qq.com ↗</small></a>
+      </div>
+    </section>
+
+    <footer>
+      <span>紫小讯月刊 · 2026年8月刊</span>
+    </footer>
+  </main>
+
+  <script>
+    const progress = document.getElementById('progress');
+    const updateProgress = () => {
+      const max = document.documentElement.scrollHeight - innerHeight;
+      progress.style.width = `${max > 0 ? (scrollY / max) * 100 : 0}%`;
+    };
+    addEventListener('scroll', updateProgress, { passive: true });
+    updateProgress();
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: .12 });
+    document.querySelectorAll('[data-reveal]').forEach((node) => observer.observe(node));
+
+    const navLinks = [...document.querySelectorAll('.digital-nav a')];
+    const sectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        navLinks.forEach((link) => {
+          link.classList.toggle('active', link.dataset.section === entry.target.id);
+        });
+      });
+    }, { threshold: .48 });
+    document.querySelectorAll('.cover[id], .page[id]').forEach((section) => sectionObserver.observe(section));
+  </script>
+</body>
+</html>

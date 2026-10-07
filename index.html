@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="紫小讯月刊·2026年8月刊，汇总紫讯技术8月业务、AI产品、组织学习、企业文化与技术治理动态。">
-  <title>紫小讯月刊｜2026年8月刊</title>
+  <meta name="description" content="紫小讯月刊·2026年10月刊，回顾紫讯技术2026年9月公司发展、组织升级、AI能力建设、公益行动与企业文化动态。">
+  <title>紫小讯月刊｜2026年10月刊</title>
   <style>
     :root {
       --paper: #f4f0e8;
@@ -58,27 +58,6 @@
       width: 0;
       height: 3px;
       background: linear-gradient(90deg, var(--red), var(--blue));
-    }
-
-    .toolbar {
-      position: fixed;
-      z-index: 30;
-      right: 20px;
-      top: 18px;
-      display: flex;
-      gap: 8px;
-    }
-
-    .toolbar button {
-      border: 1px solid rgba(255,255,255,.3);
-      border-radius: 999px;
-      padding: 10px 16px;
-      color: #fff;
-      background: rgba(23, 33, 61, .92);
-      box-shadow: 0 8px 24px rgba(23,33,61,.18);
-      font: 600 13px var(--sans);
-      cursor: pointer;
-      backdrop-filter: blur(10px);
     }
 
     .magazine {
@@ -695,7 +674,6 @@
       .cover { min-height: 680px; }
       html { scroll-snap-type: none; }
       .digital-nav { display: none; }
-      .toolbar { top: auto; right: 12px; bottom: 12px; }
       .page { min-height: auto; padding: 64px 24px; overflow: clip; }
       .cover-bottom, .editorial-grid, .headline-grid, .feature-grid, .culture-layout { grid-template-columns: 1fr; }
       .recruitment-layout { grid-template-columns: 1fr; }
@@ -714,10 +692,248 @@
       footer { flex-direction: column; }
     }
 
+    /* October issue: digital editorial system */
+    :root {
+      --paper: #f6f1e8;
+      --paper-light: #fffcf4;
+      --ink: #17251f;
+      --muted: #667169;
+      --blue: #6743c7;
+      --blue-soft: #eee8ff;
+      --red: #f15b43;
+      --violet: #6a43c8;
+      --green: #0b7a62;
+      --green-soft: #dcefe5;
+      --lime: #d4f137;
+      --line: rgba(23, 37, 31, .16);
+      --serif: "HarmonyOS Sans SC", "MiSans", "Source Han Sans SC", "Microsoft YaHei", sans-serif;
+      --sans: "HarmonyOS Sans SC", "MiSans", "Source Han Sans SC", "Microsoft YaHei", sans-serif;
+    }
+
+    body {
+      background:
+        radial-gradient(circle at 8% 10%, rgba(241,91,67,.08), transparent 28rem),
+        radial-gradient(circle at 92% 42%, rgba(11,122,98,.10), transparent 30rem),
+        var(--paper);
+    }
+
+    .progress { background: linear-gradient(90deg, var(--red), var(--lime), var(--green)); }
+    .cover { background: #14241e; }
+    .cover::before {
+      content: "OCT";
+      right: -2vw;
+      top: -7rem;
+      color: rgba(255,255,255,.045);
+      font: 900 min(34vw, 470px)/1 var(--sans);
+      letter-spacing: -.11em;
+      transform: rotate(-4deg);
+    }
+    .cover::after { border-color: var(--red); }
+    h1, h2, h3, strong { font-family: var(--sans); }
+    h1 { letter-spacing: -.08em; }
+    .cover-subtitle { font-family: var(--sans); font-weight: 500; }
+    .issue-no, .page-kicker, .date, time { font-variant-numeric: tabular-nums; }
+    .digital-nav a.active { background: var(--lime); color: #14241e; }
+
+    /* A new cover language for this issue: a September coordinate board */
+    .cover {
+      color: var(--ink);
+      background:
+        linear-gradient(rgba(23,37,31,.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(23,37,31,.07) 1px, transparent 1px),
+        #f3eee3;
+      background-size: 56px 56px;
+      overflow: hidden;
+    }
+    .cover::before {
+      content: "09";
+      right: 3vw;
+      top: 7vh;
+      color: var(--lime);
+      font: 900 min(31vw, 430px)/.78 var(--sans);
+      letter-spacing: -.12em;
+      transform: none;
+      text-shadow: 18px 18px 0 var(--violet);
+    }
+    .cover::after {
+      width: 44vw;
+      height: 100%;
+      right: 0;
+      top: 0;
+      border: 0;
+      border-radius: 0;
+      transform: none;
+      background: linear-gradient(140deg, transparent 0 60%, rgba(241,91,67,.92) 60% 73%, transparent 73%);
+      opacity: .9;
+    }
+    .cover > * { position: relative; z-index: 1; }
+    .cover .masthead { color: var(--ink); border-color: rgba(23,37,31,.3); }
+    .cover-copy { max-width: 760px; align-self: end; padding-bottom: 3vh; }
+    .cover h1 { color: var(--ink); max-width:680px; font-size: clamp(68px, 8.7vw, 132px); line-height: .94; letter-spacing: -.035em; }
+    .cover-subtitle { color: var(--ink); max-width: 650px; }
+    .cover .issue-no { color: var(--red); }
+    .cover .keywords span { color: var(--ink); border-color: rgba(23,37,31,.42); background: rgba(255,255,255,.42); }
+    .cover-note { color: var(--ink); }
+    .page p,
+    .page .lede,
+    .event-card p,
+    .value-card p,
+    .gov-card p,
+    .build-card p,
+    .culture-stack p {
+      text-align: justify;
+      text-justify: inter-ideograph;
+      text-align-last: left;
+      word-break: normal;
+      overflow-wrap: anywhere;
+    }
+    .coordinate-strip { display:flex; gap:10px; margin-top:26px; flex-wrap:wrap; }
+    .coordinate-strip span { padding:8px 12px; color:#fff; background:var(--violet); font-size:12px; font-weight:800; letter-spacing:.08em; }
+    .coordinate-strip span:nth-child(2){background:var(--green)}
+    .coordinate-strip span:nth-child(3){background:var(--red)}
+    .coordinate-strip span:nth-child(4){background:var(--ink)}
+
+    .finance-page { color: #fff; background: #15251f; }
+    .finance-page::after { opacity: .12; }
+    .finance-grid, .org-grid, .ai-grid, .forest-grid, .honor-grid, .governance-grid {
+      position: relative; z-index: 1; display: grid; gap: clamp(26px, 5vw, 80px); align-items: center;
+    }
+    .finance-grid { grid-template-columns: 1.18fr .82fr; }
+    .finance-page h2 { color: #fff; max-width: 920px; }
+    .finance-page .lede, .finance-page p { color: rgba(255,255,255,.76); }
+    .finance-page .source-link { color:#14241e; background:var(--lime); border-color:var(--lime); box-shadow:0 10px 30px rgba(212,241,55,.16); }
+    .finance-page .source-link:hover { color:#fff; background:var(--red); border-color:var(--red); }
+    .capital-card {
+      min-height: 480px; padding: 46px; display: flex; flex-direction: column; justify-content: space-between;
+      background: var(--lime); color: #14241e; border-radius: 34px 6px 34px 6px; transform: rotate(1.5deg);
+      box-shadow: 24px 24px 0 rgba(241,91,67,.9);
+    }
+    .capital-card small { letter-spacing: .16em; font-weight: 800; }
+    .capital-card strong { font-size: clamp(56px, 8vw, 106px); line-height: .9; letter-spacing: -.08em; }
+    .capital-card span { font-weight: 800; line-height: 1.55; }
+
+    .org-grid { grid-template-columns: .72fr 1.28fr; }
+    .org-visual { position: relative; min-height: 500px; }
+    .org-ring { position: absolute; border-radius: 50%; display: grid; place-items: center; font-weight: 900; text-align: center; }
+    .org-ring.one { width: 330px; height: 330px; left: 5%; top: 8%; background: var(--green); color: #fff; }
+    .org-ring.two { width: 250px; height: 250px; right: 4%; bottom: 2%; background: var(--red); color: #fff; }
+    .org-ring.three { width: 135px; height: 135px; right: 10%; top: 4%; background: var(--lime); color: var(--ink); }
+    .event-stack { display: grid; gap: 16px; }
+    .event-card { border: 1px solid var(--line); background: rgba(255,255,255,.72); border-radius: 18px; padding: 22px 24px; }
+    .event-card time { display:block; color: var(--red); font-weight: 900; letter-spacing: .08em; }
+    .event-card h3 { margin: 4px 0 4px; font-size: clamp(20px, 2vw, 28px); }
+    .event-card p { margin: 0; color: var(--muted); }
+
+    .ai-page { background: #ede8ff; }
+    .ai-grid { grid-template-columns: 1.05fr .95fr; }
+    .module-cloud { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; }
+    .module-cloud span { padding: 16px 18px; border-radius: 14px; background: #fff; border: 1px solid rgba(103,67,199,.18); font-weight: 800; }
+    .module-cloud span:last-child { grid-column: 1 / -1; background: var(--lime); color: #23301e; }
+    .build-card { padding: 32px; border-radius: 28px; color: #fff; background: var(--violet); box-shadow: 18px 18px 0 rgba(241,91,67,.82); }
+    .build-card p { color: rgba(255,255,255,.78); }
+    .build-card .source-link { color:#fff; border-color:rgba(255,255,255,.7); }
+    .build-card .source-link:hover { color:var(--violet); background:#fff; }
+    .presenter-badge { display:inline-flex; align-items:center; gap:10px; margin:18px 0 8px; padding:9px 14px; color:var(--ink); background:var(--lime); border-radius:999px; font-size:14px; font-weight:900; }
+    .presenter-badge::before { content:"DEMO"; padding:3px 7px; color:#fff; background:var(--red); border-radius:999px; font-size:10px; letter-spacing:.12em; }
+    .demo-points { display:grid; gap:10px; margin:20px 0 0; padding:0; list-style:none; }
+    .demo-points li { padding:11px 14px; background:rgba(255,255,255,.1); border-left:3px solid var(--lime); border-radius:0 10px 10px 0; font-weight:700; }
+
+    .forest-page { background: #dbeee2; }
+    .forest-grid { grid-template-columns: .88fr 1.12fr; }
+    .forest-figure { min-height: 560px; position: relative; display:grid; place-items:center; }
+    .forest-photo { width:100%; height:min(69vh,650px); object-fit:cover; display:block; border-radius:34px 8px 34px 8px; box-shadow:28px 28px 0 var(--lime); }
+    .forest-metric { position:absolute; left:-28px; bottom:28px; padding:20px 24px; color:#fff; background:var(--green); border-radius:4px 22px 4px 22px; box-shadow:0 18px 45px rgba(11,122,98,.28); }
+    .forest-metric strong { display:block; font-size:clamp(42px,5vw,72px); line-height:.86; letter-spacing:-.06em; }
+    .forest-metric span { display:block; margin-top:8px; font-weight:800; }
+    .forest-note { border-left: 5px solid var(--red); padding-left: 24px; font-size: clamp(21px,2.5vw,32px); font-weight:800; line-height:1.5; }
+
+    .altruism-page { background:#fff9ee; }
+    .altruism-grid { display:grid; grid-template-columns:1.2fr .8fr; gap:20px; align-items:stretch; }
+    .value-card { position:relative; min-height:0; padding:12px 12px 18px; border:1px solid var(--line); border-radius:22px; background:#fff; box-shadow:var(--shadow); display:flex; flex-direction:column; }
+    .value-card:first-child { transform:rotate(-.6deg); }
+    .value-card:last-child { transform:rotate(.7deg); background:#edf2ff; }
+    .value-card img { width:100%; height:min(51vh,470px); object-fit:contain; display:block; border-radius:12px; background:#fff; }
+    .value-card h3 { margin:14px 4px 2px; font-size:clamp(22px,2vw,30px); }
+    .value-card p { margin:0 4px; color:var(--muted); }
+    .zoomable { cursor:zoom-in; transition:transform .25s ease, filter .25s ease; }
+    .zoomable:hover,.zoomable:focus { transform:scale(1.012); filter:contrast(1.03); outline:3px solid var(--lime); outline-offset:3px; }
+    .zoom-hint { position:absolute; top:24px; right:24px; z-index:2; padding:7px 11px; color:#fff; background:rgba(23,37,31,.78); border-radius:999px; font-size:11px; font-weight:800; backdrop-filter:blur(8px); pointer-events:none; }
+
+    .honesty-page { color:#fff; background:var(--violet); }
+    .honesty-grid { display:grid; grid-template-columns:.85fr 1.15fr; gap:clamp(28px,6vw,90px); align-items:center; }
+    .honesty-page h2 { color:#fff; }
+    .honesty-page .lede,.honesty-page p { color:rgba(255,255,255,.76); }
+    .honesty-page .page-kicker { color:var(--lime); }
+    .honesty-page .source-link { color:#1c2430; background:var(--lime); border-color:var(--lime); }
+    .response-flow { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; counter-reset:flow; }
+    .response-flow div { min-height:170px; padding:24px; color:var(--ink); background:#fff; border-radius:24px 6px 24px 6px; counter-increment:flow; }
+    .response-flow div::before { content:"0" counter(flow); display:block; color:var(--red); font-weight:900; letter-spacing:.12em; }
+    .response-flow strong { display:block; margin-top:26px; font-size:clamp(20px,2vw,28px); }
+
+    .festival-page { background:#f15b43; color:#fff; }
+    .festival-grid { display:grid; grid-template-columns:.72fr 1.28fr; gap:clamp(28px,5vw,72px); align-items:center; }
+    .festival-page h2 { color:#fff; }
+    .festival-page .page-kicker { color:var(--lime); }
+    .festival-page .lede,.festival-page p { color:rgba(255,255,255,.82); }
+    .festival-page .source-link { color:var(--ink); background:var(--lime); border-color:var(--lime); }
+    .festival-photo { padding:10px; background:#fff; border-radius:28px 6px 28px 6px; box-shadow:22px 22px 0 var(--violet); }
+    .festival-photo img { width:100%; height:min(72vh,650px); object-fit:cover; display:block; border-radius:20px 4px 20px 4px; }
+
+    .governance-grid { grid-template-columns:repeat(3,minmax(0,1fr)); align-items:stretch; }
+    .gov-card { min-height:420px;padding:28px;border:1px solid var(--line);border-radius:20px;background:#fff;display:flex;flex-direction:column; }
+    .gov-card:nth-child(2){background:#17251f;color:#fff}.gov-card:nth-child(2) p{color:rgba(255,255,255,.7)}
+    .gov-card:nth-child(3){background:var(--lime)}
+    .gov-card time { color:var(--red);font-weight:900; }
+    .gov-card h3 { font-size:clamp(24px,2.5vw,34px);line-height:1.18;margin:20px 0 14px; }
+    .gov-card p { color:var(--muted); }
+    .gov-card .source-links { margin-top:auto; }
+    .gov-card:nth-child(2) .source-link { color:#fff; border-color:rgba(255,255,255,.72); }
+    .gov-card:nth-child(2) .source-link:hover { color:var(--ink); background:#fff; }
+
+    .lightbox { position:fixed; inset:0; z-index:1000; display:grid; place-items:center; padding:clamp(20px,4vw,60px); background:rgba(8,15,12,.9); opacity:0; visibility:hidden; transition:opacity .24s ease, visibility .24s ease; }
+    .lightbox.open { opacity:1; visibility:visible; }
+    .lightbox figure { margin:0; max-width:min(94vw,1500px); max-height:90vh; display:grid; gap:10px; justify-items:center; }
+    .lightbox img { max-width:100%; max-height:84vh; object-fit:contain; border-radius:10px; box-shadow:0 30px 90px rgba(0,0,0,.45); }
+    .lightbox figcaption { color:#fff; font-size:14px; }
+    .lightbox-close { position:absolute; top:20px; right:24px; width:46px; height:46px; border:1px solid rgba(255,255,255,.5); border-radius:50%; color:#fff; background:rgba(255,255,255,.08); font-size:26px; cursor:pointer; }
+    body.lightbox-open { overflow:hidden; }
+
+    .source-list { grid-template-columns: repeat(2,minmax(0,1fr)); }
+    .source-list a { min-height:86px; }
+    footer { background:#14241e; }
+
+    @media (max-width: 900px) {
+      .finance-grid,.org-grid,.ai-grid,.forest-grid,.altruism-grid,.honesty-grid,.festival-grid { grid-template-columns:1fr; }
+      .governance-grid { grid-template-columns:1fr; }
+      .capital-card,.org-visual,.forest-figure,.gov-card { min-height:auto; }
+      .org-visual { min-height:360px; }
+      .value-card img,.festival-photo img { max-height:none;height:auto; }
+      .response-flow { grid-template-columns:1fr 1fr; }
+      .source-list { grid-template-columns:1fr; }
+    }
+
+    @media (min-width: 901px) and (max-height: 820px) {
+      .page { padding-top:40px;padding-bottom:40px; }
+      .capital-card { min-height:380px; }
+      .value-card img { height:40vh; }
+      .festival-photo img { height:62vh; }
+      .gov-card { min-height:350px; }
+    }
+
+    @media (max-width: 560px) {
+      .cover::before { top:9vh; right:-4vw; font-size:62vw; }
+      .cover::after { width:100%; height:45%; top:auto; bottom:0; }
+      .coordinate-strip { gap:6px; }
+      .coordinate-strip span { font-size:10px; padding:6px 8px; }
+      .forest-metric { left:12px; bottom:12px; }
+      .response-flow { grid-template-columns:1fr; }
+      .response-flow div { min-height:120px; }
+    }
+
     @media print {
       @page { size: A4; margin: 12mm; }
       body { background: #fff; }
-      body::before, .toolbar, .progress { display: none; }
+      body::before, .progress { display: none; }
       .magazine { width: 100%; margin: 0; box-shadow: none; }
       .cover { min-height: 260mm; break-after: page; }
       .page { break-inside: avoid; padding: 18mm 12mm; }
@@ -728,38 +944,38 @@
 </head>
 <body>
   <div class="progress" id="progress"></div>
-  <div class="toolbar" aria-label="页面工具">
-    <button type="button" onclick="window.print()">打印 / 导出 PDF</button>
-  </div>
   <nav class="digital-nav" aria-label="全屏页导航">
     <a href="#top" data-section="top" title="封面">00</a>
     <a href="#preface" data-section="preface" title="卷首语">01</a>
-    <a href="#headline" data-section="headline" title="SIF月度头条">02</a>
-    <a href="#compliance" data-section="compliance" title="LinkFox合规">03</a>
-    <a href="#agent" data-section="agent" title="紫鸟 Agent">04</a>
-    <a href="#learning" data-section="learning" title="组织成长">05</a>
-    <a href="#recruitment" data-section="recruitment" title="校园招聘">06</a>
-    <a href="#culture" data-section="culture" title="文化温度">07</a>
-    <a href="#timeline" data-section="timeline" title="八月时间轴">08</a>
-    <a href="#sources" data-section="sources" title="来源直达">09</a>
+    <a href="#headline" data-section="headline" title="融资头条">02</a>
+    <a href="#organization" data-section="organization" title="组织聚焦">03</a>
+    <a href="#ai" data-section="ai" title="AI能力">04</a>
+    <a href="#forest" data-section="forest" title="步履成林">05</a>
+    <a href="#altruism" data-section="altruism" title="利他价值观">06</a>
+    <a href="#honesty" data-section="honesty" title="坦诚有回应">07</a>
+    <a href="#governance" data-section="governance" title="治理速览">08</a>
+    <a href="#festival" data-section="festival" title="中秋博饼">09</a>
+    <a href="#timeline" data-section="timeline" title="九月时间轴">10</a>
+    <a href="#sources" data-section="sources" title="来源直达">11</a>
   </nav>
 
   <main class="magazine">
     <header class="cover" id="top">
       <div class="masthead">
         <span class="brand">ZIXUN <i>紫讯</i></span>
-        <span>INTERNAL MONTHLY · 2026</span>
+        <span>MONTHLY · 2026</span>
       </div>
       <div class="cover-copy">
-        <p class="issue-no">VOL. 01 / AUGUST</p>
+        <p class="issue-no">VOL. 02 / OCTOBER · 九月回顾</p>
         <h1>紫小讯<br>月刊</h1>
-        <p class="cover-subtitle">AI能力向产品、业务与组织深处生长。<br>记录紫讯人的八月进展。</p>
+        <p class="cover-subtitle">从组织聚焦到AI进阶，从荒漠新绿到并肩同行。<br>这一期，我们记录改变发生的位置。</p>
+        <div class="coordinate-strip" aria-label="本期坐标"><span>组织 / 聚焦</span><span>AI / 进阶</span><span>公益 / 同行</span><span>文化 / 回响</span></div>
       </div>
       <div class="cover-bottom">
         <div class="keywords" aria-label="本期关键词">
-          <span>AI进化</span><span>业务拓展</span><span>合规底座</span><span>共同成长</span>
+          <span>12个事件坐标</span><span>4条价值线索</span>
         </div>
-        <p class="cover-note">2026年8月刊<br>内容截至 2026.08.31</p>
+        <p class="cover-note">2026年10月刊<br>内容截至 2026.09.30</p>
       </div>
     </header>
 
@@ -767,177 +983,175 @@
       <div class="editorial-grid">
         <div data-reveal>
           <div class="page-kicker">Editor's Letter · 卷首语</div>
-          <h2>在学习、连接与生长中，继续向前</h2>
-          <p class="lede dropcap">八月，紫讯在学习、连接与生长中持续向前。从AI应用实践案例分享会，到紫鸟 Agent连续升级，再到SIF项目正式加入，公司正加快AI能力向产品、业务与日常工作流的深度融入。</p>
-          <p class="lede" style="margin-top:18px">与此同时，紫讯圈上线、导师推荐活动启动、年度健康礼包发放，也让组织连接更紧密、文化表达更鲜活。这一期《紫小讯月刊》，让我们一起回顾属于紫讯人的八月关键词：AI进化、业务拓展、合规底座、共同成长。</p>
+          <h2>收获之后，整装再出发</h2>
+          <p class="lede dropcap">九月，是收获的季节，也是整装再出发的起点。这个月，我们完成两轮组织架构优化，让团队更聚焦、协作更高效；AI通识知识库正式上线，为每一位伙伴的AI能力升级搭好阶梯。</p>
+          <p class="lede" style="margin-top:18px">806万步的坚持，在宁夏荒漠化作2000棵枸杞树，让“利他”从一句价值观，长成真实可见的绿意。与此同时，紫讯技术完成Pre-IPO轮融资，新的资本与产业伙伴加入同行。改变正在发生——从组织到个人，从工具到文化。十月，继续向前。</p>
         </div>
         <nav class="contents" aria-label="本期目录" data-reveal>
           <h3>本期目录</h3>
-          <a href="#headline"><b>01</b><span>月度头条：SIF加入紫讯</span></a>
-          <a href="#compliance"><b>02</b><span>合规里程碑：模特视觉大模型</span></a>
-          <a href="#agent"><b>03</b><span>产品进化：紫鸟 Agent三连升</span></a>
-          <a href="#learning"><b>04</b><span>组织成长：让AI成为工作能力</span></a>
-          <a href="#recruitment"><b>05</b><span>人才发展：2027届校园招聘</span></a>
-          <a href="#culture"><b>06</b><span>文化温度：连接每一个紫讯人</span></a>
-          <a href="#timeline"><b>07</b><span>八月大事记</span></a>
+          <a href="#headline"><b>01</b><span>月度头条：Pre-IPO轮融资</span></a>
+          <a href="#organization"><b>02</b><span>组织聚焦：两轮架构优化</span></a>
+          <a href="#ai"><b>03</b><span>能力进阶：知识与实践沉淀</span></a>
+          <a href="#forest"><b>04</b><span>步履成林：806万步走进荒漠</span></a>
+          <a href="#altruism"><b>05</b><span>利他价值：导师与服务之星</span></a>
+          <a href="#honesty"><b>06</b><span>坦诚价值：让建议有回应</span></a>
+          <a href="#governance"><b>07</b><span>治理速览：规范、制度与资源</span></a>
+          <a href="#festival"><b>08</b><span>中秋博饼：欢聚与团圆</span></a>
         </nav>
       </div>
     </section>
 
-    <section class="page headline" id="headline">
-      <div class="headline-grid">
-        <div class="headline-copy" data-reveal>
+    <section class="page finance-page" id="headline">
+      <div class="finance-grid">
+        <div data-reveal>
           <div class="page-kicker">Cover Story · 月度头条</div>
-          <h2>紫讯AI产品版图再拓展：SIF正式加入紫讯大家庭</h2>
-          <p>公司完成对SIF项目的收购。作为聚焦亚马逊广告与流量洞察的专业工具，SIF将纳入AI产品中心统一管理，原团队成员正式加入紫讯大家庭。</p>
-          <p>此次整合进一步补充公司在关键词研究、竞品流量拆解和广告洞察等方面的能力，为AI驱动的跨境电商经营体系增添新的数据与产品支点。</p>
-          <blockquote class="pullquote">从工具能力到数据能力，从单点洞察到智能经营，新的协同由此开启。</blockquote>
-          <div class="source-links">
-            <a class="source-link" href="https://www.sif.com/" target="_blank" rel="noopener noreferrer">直达 SIF 官网</a>
-          </div>
+          <h2>紫讯技术完成Pre-IPO轮融资，全面提速LinkFox发展</h2>
+          <p class="lede">9月，紫讯技术完成新一轮融资。本轮融资由国泰海通私募领投，凯辉基金、福建省省级政府投资基金及福州金榕集团跟投。</p>
+          <p>本轮融资完成后，公司将进一步推动电商AI应用平台LinkFox的技术迭代与应用落地，持续投入电商安全及自动化经营场景的垂直模型、知识引擎、数据系统和AI智能体产品矩阵。</p>
+          <blockquote class="pullquote">让AI更深入地进入真实电商经营流程，为卖家的效率提升和业务增长创造长期价值。</blockquote>
+          <div class="source-links"><a class="source-link" href="https://mp.weixin.qq.com/s/ezDfuXEGuen09wSysxA6Dg" target="_blank" rel="noopener noreferrer">阅读官方公众号文章</a></div>
         </div>
-        <div class="headline-art" aria-label="SIF专题视觉" data-reveal>
-          <div><strong>SIF</strong><span>AD &amp; TRAFFIC INTELLIGENCE</span></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="page feature" id="compliance">
-      <div class="feature-grid">
-        <div class="shield" data-reveal>
-          <small>AI COMPLIANCE</small>
-          <strong>合规<br>上线</strong>
-          <span>MODEL VISUAL · LINKFOX AI</span>
-        </div>
-        <div data-reveal>
-          <div class="page-kicker">Milestone · 合规里程碑</div>
-          <h2>LinkFox AI“模特视觉”大模型，筑牢可信视觉服务底座</h2>
-          <p class="lede">本次“模特视觉”大模型顺利完成福建省生成式人工智能服务备案，是紫讯技术在AI合规建设上的重要进展。这份备案成果，凝聚了PMO与业务团队一年来的协同投入与持续推进。</p>
-          <div class="fact-row" aria-label="备案关键信息">
-            <div class="fact"><strong>模特视觉</strong><span>大模型名称</span></div>
-            <div class="fact"><strong>2026.03.16</strong><span>权威公告所列备案时间</span></div>
-            <div class="fact"><strong>Fujian-…0009</strong><span>备案编号尾号</span></div>
-          </div>
-          <p>这不仅是一次产品合规动作，更是LinkFox AI底层技术能力走向规模化服务的重要基础。依托视觉大模型，LinkFox AI将继续服务AI模特、商品图、营销素材等跨境电商视觉生产场景，帮助卖家提升内容效率与商品表现。</p>
-          <div class="source-links">
-            <a class="source-link" href="https://www.fjwx.gov.cn/gs/20260423/3022036.html" target="_blank" rel="noopener noreferrer">福建网信网备案公告</a>
-            <a class="source-link" href="https://www.linkfox.com/" target="_blank" rel="noopener noreferrer">直达 LinkFox AI</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="page agent-page" id="agent">
-      <div class="page-kicker">Product Evolution · 产品进化</div>
-      <h2>从“看懂数据”到“进入团队”，紫鸟 Agent连续升级</h2>
-      <p class="agent-intro">8月，紫鸟 Agent围绕数据、团队和执行三层能力持续进化，推动AI从一次对话走进跨境企业的真实工作流。</p>
-      <div class="agent-steps">
-        <article class="agent-step" data-reveal>
-          <span class="date">08.05</span>
-          <h3>打通多源经营数据</h3>
-          <p>连接SP-API、Ads API、紫鸟店铺数据、企业自有报表及第三方工具，让经营分析从固定报表转向自然语言按需拆解。</p>
-          <div class="source-links"><a class="source-link" href="https://www.superbrowser.com/blog/4662.html" target="_blank" rel="noopener noreferrer">紫鸟官网推文</a></div>
-        </article>
-        <article class="agent-step" data-reveal>
-          <span class="date">08.18</span>
-          <h3>升级企业级团队能力</h3>
-          <p>新增成员权限、自定义模型、积分明细与SP-API最小授权能力，帮助AI从少数人尝试走向团队规模化使用。</p>
-          <div class="source-links"><a class="source-link" href="https://www.superbrowser.com/blog/4710.html" target="_blank" rel="noopener noreferrer">紫鸟官网推文</a></div>
-        </article>
-        <article class="agent-step" data-reveal>
-          <span class="date">08.26</span>
-          <h3>两分钟巡检店铺健康</h3>
-          <p>“AMZ店铺绩效健康快报”Skill自动抓取风险信号、生成分级报告，还可定时执行并推送至飞书或钉钉。</p>
-          <div class="source-links"><a class="source-link" href="https://www.superbrowser.com/blog/6109.html" target="_blank" rel="noopener noreferrer">紫鸟官网推文</a></div>
-        </article>
-      </div>
-    </section>
-
-    <section class="page" id="learning">
-      <div class="page-kicker">AI-Native Organization · 组织成长</div>
-      <h2>让AI实践被看见、被分享、被复用</h2>
-      <p class="lede">两期案例分享会持续沉淀一线经验，让AI实践变成可交流、可复用的组织能力。</p>
-      <div class="learning-grid">
-        <article class="story-card" data-reveal>
-          <span class="tag">培训学习 · 8月4日</span>
-          <div class="num">07</div>
-          <h3>第七期紫讯AI应用实践案例分享会</h3>
-          <p>福州西沙群岛会议室，线上线下同步开展，让一线实践变成可复用的组织经验。</p>
-          <div class="source-links"><a class="source-link" href="https://yxgb3sicy7.feishu.cn/wiki/Ff4CwTaBDiszrkkK2q4cB6Ymnkd?from=from_parent_docx" target="_blank" rel="noopener noreferrer">直达第七期案例分享会</a></div>
-        </article>
-        <article class="story-card" data-reveal>
-          <span class="tag">培训学习 · 8月12日</span>
-          <div class="num">08</div>
-          <h3>第八期紫讯AI应用实践案例分享会</h3>
-          <p>多个会场线上同步参与，共享岗位场景中的AI应用方法与实践经验。</p>
-          <div class="source-links"><a class="source-link" href="https://yxgb3sicy7.feishu.cn/wiki/GvnWwIySniERPfko6IvctD6Inqc" target="_blank" rel="noopener noreferrer">直达第八期案例分享会</a></div>
-        </article>
-      </div>
-    </section>
-
-    <section class="page recruitment-page" id="recruitment">
-      <div class="recruitment-layout">
-        <div data-reveal>
-          <div class="page-kicker">Campus Recruitment · 人才发展</div>
-          <h2>紫讯2027届校园招聘正式启动</h2>
-          <p class="lede">“启航星程·智领全球”。紫讯面向2027届应届毕业生启动“启航星计划”，聚焦AI产研、算法、数据分析等关键方向，寻找具备AI Native思维的新生力量。</p>
-          <p style="max-width:720px;color:rgba(255,255,255,.7)">从第一天起，每一份努力、每一行代码、每一个策略，都将牵引业务向上生长。工作地点覆盖福州、深圳、厦门。</p>
-          <div class="source-links">
-            <a class="source-link" href="https://mp.weixin.qq.com/s/JvsYBuvFApVNdwzSFd8U6A" target="_blank" rel="noopener noreferrer">阅读官方招聘推文</a>
-            <a class="source-link" href="https://fzzixun.zhiye.com/jobs?activityGuid=caf7bf16-0398-4084-9278-32858b737084" target="_blank" rel="noopener noreferrer">进入校招投递</a>
-          </div>
-        </div>
-        <aside class="recruitment-aside" data-reveal>
-          <strong>七大AI方向</strong>
-          <div class="role-cloud">
-            <span>AI Agent</span><span>AI应用</span><span>AI全栈</span><span>底层能力</span><span>AI产品</span><span>AI数据分析</span><span>AIGC算法</span>
-          </div>
-          <div class="city-row"><span>福州</span><span>深圳</span><span>厦门</span></div>
+        <aside class="capital-card" data-reveal>
+          <small>NEW CAPITAL · NEW MOMENTUM</small>
+          <strong>PRE<br>IPO</strong>
+          <span>电商科技 × 垂直AI<br>新的增长动能正在汇聚</span>
         </aside>
       </div>
     </section>
 
-    <section class="page culture" id="culture">
-      <div class="culture-layout">
-        <div data-reveal>
-          <div class="page-kicker">People &amp; Culture · 文化温度</div>
-          <h2>让每一次分享、感谢与关怀，都被看见</h2>
-          <div class="culture-list">
-            <article class="culture-item">
-              <time>08.05</time><div><h3>「紫讯圈」上线公测</h3><p>支持实名或匿名发布，以首帖奖和优质内容奖鼓励员工分享。</p></div>
-            </article>
-            <article class="culture-item">
-              <time>08.12</time><div><h3>年度健康大礼包发放</h3><p>面向全体员工，把组织关怀送到每个人手中。</p></div>
-            </article>
-            <article class="culture-item">
-              <time>08.20</time><div><h3>“最佳导师推荐”活动启动</h3><p>以“谢谢你，成为我的职场引路人”为主题，发现并致敬优秀导师。</p></div>
-            </article>
-          </div>
-          <div class="source-links"><a class="source-link" href="https://yxgb3sicy7.feishuapp.com/app/app_17a329jdde9" target="_blank" rel="noopener noreferrer">直达紫讯圈</a></div>
+    <section class="page" id="organization">
+      <div class="org-grid">
+        <div class="org-visual" aria-label="组织聚焦主题视觉" data-reveal>
+          <div class="org-ring one">核心业务<br>更聚焦</div>
+          <div class="org-ring two">协作效率<br>再提升</div>
+          <div class="org-ring three">组织<br>升级</div>
         </div>
-        <aside class="quote-panel" data-reveal>
-          <blockquote>“谢谢你，成为我的职场引路人。”</blockquote>
-          <p>教师节“最佳导师推荐”活动主题</p>
-        </aside>
+        <div data-reveal>
+          <div class="page-kicker">Organization · 组织聚焦</div>
+          <h2>两轮架构优化，让目标更清晰、协作更顺畅</h2>
+          <div class="event-stack">
+            <article class="event-card"><time>09.02</time><h3>集团组织及人员调整落地</h3><p>进一步优化组织架构、聚焦核心业务发展，持续推进组织效能提升。</p><div class="source-links"><a class="source-link" href="https://applink.feishu.cn/T9ajPNilF8ql" target="_blank" rel="noopener noreferrer">查看内部公告</a></div></article>
+            <article class="event-card"><time>09.17</time><h3>运营中心、综合服务支持中心完成架构调整</h3><p>进一步明确职责与协作关系，为业务发展与服务效率提升提供支撑。</p><div class="source-links"><a class="source-link" href="https://applink.feishu.cn/T99NXi623VIb" target="_blank" rel="noopener noreferrer">查看内部公告</a></div></article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="page ai-page" id="ai">
+      <div class="ai-grid">
+        <div data-reveal>
+          <div class="page-kicker">AI Literacy · 能力进阶</div>
+          <h2>AI通识知识库正式上线</h2>
+          <p class="lede">6个模块、23篇内容，为各岗位伙伴搭建无需编程基础的系统学习路径。</p>
+          <div class="module-cloud" aria-label="AI通识知识库模块">
+            <span>AI认知与场景判断</span><span>协作方法</span><span>调研与文件处理</span><span>数据整理</span><span>内容生产</span><span>安全合规与成本意识</span><span>拓展：Figma · AI辅助编程 · Vibe Coding · Skill</span>
+          </div>
+          <div class="source-links"><a class="source-link" href="https://yxgb3sicy7.feishu.cn/wiki/MkROwLvqkiSiTPk4yjicZYiUnFg?from=from_copylink" target="_blank" rel="noopener noreferrer">进入AI通识知识库</a></div>
+        </div>
+        <article class="build-card" data-reveal>
+          <div class="page-kicker">Case Demo · 案例分享</div>
+          <h3>庞东亚分享：AI销售增长驾驶舱案例Demo</h3>
+          <div class="presenter-badge">分享人 · 庞东亚</div>
+          <p>围绕真实销售场景，拆解从需求洞察、方案设计到前后端Demo呈现的完整思路，并将关键过程与相关资料沉淀入库，方便团队继续参考、讨论与复用。</p>
+          <ul class="demo-points"><li>从业务问题出发梳理产品方案</li><li>用Demo验证AI能力与销售流程的结合方式</li><li>沉淀可复用的案例资料与实践方法</li></ul>
+          <div class="source-links"><a class="source-link" href="https://yxgb3sicy7.feishu.cn/wiki/ORB7wllsXi8unqkCJfIc1Cfxnrh" target="_blank" rel="noopener noreferrer">查看案例资料</a></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="page forest-page" id="forest">
+      <div class="forest-grid">
+        <div data-reveal>
+          <div class="page-kicker">Steps into Green · 步履成林</div>
+          <h2>806万步，走进宁夏荒漠</h2>
+          <p class="lede">9月20日，紫讯技术公益林在宁夏荒漠正式立牌。每一次运动打卡，都在远方长成真实可见的绿意。</p>
+          <p class="forest-note">每一步都算数：806万步打卡，换来2000棵枸杞树。</p>
+          <p>随着中国绿化基金会官方捐赠证书颁发、公益林立牌落地，员工一次次运动打卡汇聚成真实可见的绿意，让共同参与的公益行动在宁夏荒漠扎下根来。</p>
+          <div class="source-links"><a class="source-link" href="https://yxgb3sicy7.feishuapp.com/app/app_17a329jdde9/post/e6d3e1a7-4699-4a9a-b01b-830b1a2bc0d1" target="_blank" rel="noopener noreferrer">查看紫讯圈原帖</a></div>
+        </div>
+        <figure class="forest-figure" data-reveal>
+          <img class="forest-photo" src="assets/2026年紫讯技术公益林.jpg" alt="宁夏荒漠中的紫讯技术公益林立牌，2026年共种植2000棵枸杞树">
+          <figcaption class="forest-metric"><strong>2000</strong><span>棵枸杞树 · 宁夏</span></figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="page altruism-page" id="altruism">
+      <div class="page-kicker">Altruism in Action · 利他价值观</div>
+      <h2>专业被传递，可靠的回应被看见</h2>
+      <div class="altruism-grid">
+        <article class="value-card" data-reveal>
+          <span class="zoom-hint">点击查看大图 ＋</span>
+          <img class="zoomable" tabindex="0" role="button" src="assets/2026年紫讯教师节导师名单.png" alt="2026年紫讯教师节导师名单：17位最佳导师与2位启航星专项导师" data-caption="2026年紫讯教师节导师名单">
+          <h3>19位导师，为“利他”价值观代言</h3>
+          <p>17位最佳导师与2位启航星专项导师，让方法被传递，让成长真实发生。</p>
+        </article>
+        <article class="value-card" data-reveal>
+          <span class="zoom-hint">点击查看大图 ＋</span>
+          <img class="zoomable" tabindex="0" role="button" src="assets/2026年8月服务之星.png" alt="2026年8月服务之星：许思怡、顾美玲、梁超" data-caption="2026年8月服务之星：许思怡、顾美玲、梁超">
+          <h3>3位服务之星，让每次需求都有可靠回应</h3>
+          <p>许思怡、顾美玲、梁超，以专业、责任与快速成长服务每一位伙伴和客户。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="page honesty-page" id="honesty">
+      <div class="honesty-grid">
+        <div data-reveal>
+          <div class="page-kicker">Honesty with Response · 坦诚价值观</div>
+          <h2>坦诚说出来，让每一条建议都有交代</h2>
+          <p class="lede">9月23日，紫讯圈“坦诚有回应”正式上线。工作中的困扰、希望优化的流程、让公司变得更好的想法，都可以在这里匿名提出并持续查看办理进展。</p>
+          <p>不只是“发出来”，更重要的是有人负责、持续跟进，并对最终结果进行反馈；暂时无法落实的，也会说明原因。</p>
+          <div class="source-links"><a class="source-link" href="https://yxgb3sicy7.feishuapp.com/app/app_17eg4uagsfh/" target="_blank" rel="noopener noreferrer">进入“坦诚有回应”</a></div>
+        </div>
+        <div class="response-flow" aria-label="坦诚有回应办理流程" data-reveal>
+          <div><strong>匿名提出建议</strong></div>
+          <div><strong>认领或指派跟进</strong></div>
+          <div><strong>持续查看进展</strong></div>
+          <div><strong>反馈结果并闭环</strong></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="page" id="governance">
+      <div class="page-kicker">Governance · 治理速览</div>
+      <h2>把经验留下，把流程理顺，把资源用在价值上</h2>
+      <div class="governance-grid">
+        <article class="gov-card" data-reveal><time>09.01</time><h3>项目上下文资产留存管理规范发布</h3><p>推动关键背景、决策过程和实践经验持续沉淀，降低人员变化造成的知识断层风险。</p><div class="source-links"><a class="source-link" href="https://yxgb3sicy7.feishu.cn/docx/L129dQQFVo5xLoxorFPc1JlOnrh" target="_blank" rel="noopener noreferrer">查看公告</a></div></article>
+        <article class="gov-card" data-reveal><time>09.24</time><h3>报销与差旅制度升级至V4.0</h3><p>为员工提供更清晰的执行指引和更高效的流程体验，让制度更好地服务日常工作。</p><div class="source-links"><a class="source-link" href="https://applink.feishu.cn/T99ZWZMryv26" target="_blank" rel="noopener noreferrer">查看公告</a></div></article>
+        <article class="gov-card" data-reveal><time>09.24</time><h3>Q4 AI工具额度调整</h3><p>优化AI工具资源配置，在保障业务高效使用的同时强化成本意识，让投入聚焦真实业务价值。</p><div class="source-links"><a class="source-link" href="https://yxgb3sicy7.feishu.cn/wiki/CueXw9UpoiYzaiksRpvcAnlMnyh" target="_blank" rel="noopener noreferrer">查看公告</a></div></article>
+      </div>
+    </section>
+
+    <section class="page festival-page" id="festival">
+      <div class="festival-grid">
+        <div data-reveal>
+          <div class="page-kicker">Mid-Autumn Gathering · 中秋欢聚</div>
+          <h2>骰子落定，好运与团圆同时抵达</h2>
+          <p class="lede">9月24日，中秋博饼活动在各地办公室热闹开锣。中秋礼包同步就位，伙伴们在欢笑与喝彩中提前感受团圆氛围。</p>
+          <p>从一张张笑脸，到跨越不同办公室的共同节日记忆，这个秋天，团圆不只是一份礼物，也是一次真实的连接。</p>
+          <div class="source-links"><a class="source-link" href="https://mp.weixin.qq.com/s/YQzwLOHiUBLLd4zuei8itQ" target="_blank" rel="noopener noreferrer">查看中秋活动推文</a></div>
+        </div>
+        <figure class="festival-photo" data-reveal><img src="assets/2026年中秋博饼活动.jpg" alt="紫讯各地办公室中秋博饼活动照片合集"></figure>
       </div>
     </section>
 
     <section class="page" id="timeline">
-      <div class="page-kicker">August Timeline · 八月大事记</div>
+      <div class="page-kicker">September Timeline · 九月大事记</div>
       <h2>一个月，十二个值得记录的坐标</h2>
       <div class="timeline">
-        <div class="timeline-item"><time>08.04</time><div class="timeline-copy"><strong>第七期紫讯AI应用实践案例分享会</strong><span>AI学习 · 福州及线上</span></div></div>
-        <div class="timeline-item"><time>08.05</time><div class="timeline-copy"><strong>紫讯圈上线公测</strong><span>企业文化 · 内部连接</span></div></div>
-        <div class="timeline-item"><time>08.05</time><div class="timeline-copy"><strong>紫鸟 Agent经营数据能力升级</strong><span>AI产品 · 多源数据</span></div></div>
-        <div class="timeline-item"><time>08.12</time><div class="timeline-copy"><strong>第八期紫讯AI应用实践案例分享会</strong><span>AI学习 · 实践共享</span></div></div>
-        <div class="timeline-item"><time>08.12</time><div class="timeline-copy"><strong>年度健康大礼包发放</strong><span>员工关怀 · 健康福利</span></div></div>
-        <div class="timeline-item"><time>08.MID</time><div class="timeline-copy"><strong>2027届校园招聘启动</strong><span>人才发展 · 启航星计划</span></div></div>
-        <div class="timeline-item"><time>08.17</time><div class="timeline-copy"><strong>GitLab Access Token规范化治理</strong><span>技术治理 · 安全合规</span></div></div>
-        <div class="timeline-item"><time>08.18</time><div class="timeline-copy"><strong>紫鸟 Agent企业级能力升级</strong><span>AI产品 · 团队权限与安全</span></div></div>
-        <div class="timeline-item"><time>08.20</time><div class="timeline-copy"><strong>教师节“最佳导师推荐”活动启动</strong><span>企业文化 · 导师传承</span></div></div>
-        <div class="timeline-item"><time>08.26</time><div class="timeline-copy"><strong>紫鸟 Agent上线店铺健康巡检能力</strong><span>AI产品 · 自动化风控</span></div></div>
-        <div class="timeline-item"><time>战略</time><div class="timeline-copy"><strong>公司收购SIF项目</strong><span>业务战略 · 产品版图拓展</span></div></div>
-        <div class="timeline-item"><time>合规</time><div class="timeline-copy"><strong>“模特视觉”大模型完成生成式人工智能服务备案</strong><span>AI合规 · PMO与业务团队协同推进</span></div></div>
+        <div class="timeline-item"><time>09.01</time><div class="timeline-copy"><strong>项目上下文资产留存规范发布</strong><span>组织治理 · 知识沉淀</span></div></div>
+        <div class="timeline-item"><time>09.02</time><div class="timeline-copy"><strong>集团组织及人员调整落地</strong><span>组织效能 · 核心聚焦</span></div></div>
+        <div class="timeline-item"><time>09.04</time><div class="timeline-copy"><strong>庞东亚分享AI销售增长驾驶舱案例Demo</strong><span>AI实践 · 案例分享</span></div></div>
+        <div class="timeline-item"><time>09.10</time><div class="timeline-copy"><strong>19位导师获教师节表彰</strong><span>企业文化 · 利他传承</span></div></div>
+        <div class="timeline-item"><time>09.10</time><div class="timeline-copy"><strong>紫讯技术完成Pre-IPO轮融资</strong><span>公司发展 · AI战略</span></div></div>
+        <div class="timeline-item"><time>09.16</time><div class="timeline-copy"><strong>8月服务之星名单公布</strong><span>员工荣誉 · 服务体验</span></div></div>
+        <div class="timeline-item"><time>09.17</time><div class="timeline-copy"><strong>两大中心完成架构调整</strong><span>组织效能 · 协作升级</span></div></div>
+        <div class="timeline-item"><time>09.18</time><div class="timeline-copy"><strong>AI通识知识库正式上线</strong><span>能力建设 · 学习路径</span></div></div>
+        <div class="timeline-item"><time>09.20</time><div class="timeline-copy"><strong>紫讯技术公益林正式立牌</strong><span>全员公益 · 步履成林</span></div></div>
+        <div class="timeline-item"><time>09.23</time><div class="timeline-copy"><strong>“坦诚有回应”正式上线</strong><span>企业文化 · 建议闭环</span></div></div>
+        <div class="timeline-item"><time>09.24</time><div class="timeline-copy"><strong>中秋博饼活动热闹开锣</strong><span>员工关怀 · 欢聚团圆</span></div></div>
+        <div class="timeline-item"><time>09.24</time><div class="timeline-copy"><strong>制度V4.0与Q4 AI额度调整发布</strong><span>组织治理 · 清晰高效</span></div></div>
       </div>
     </section>
 
@@ -945,21 +1159,30 @@
       <div class="page-kicker">Source Desk · 来源直达</div>
       <h2>延伸阅读与信息来源</h2>
       <div class="source-list">
-        <a href="https://www.sif.com/" target="_blank" rel="noopener noreferrer"><b>01</b><span>SIF官网：广告与流量洞察产品信息</span><small>sif.com ↗</small></a>
-        <a href="https://www.fjwx.gov.cn/gs/20260423/3022036.html" target="_blank" rel="noopener noreferrer"><b>02</b><span>福建网信网：“模特视觉”大模型备案公告</span><small>fjwx.gov.cn ↗</small></a>
-        <a href="https://www.linkfox.com/" target="_blank" rel="noopener noreferrer"><b>03</b><span>LinkFox AI官网：AI模特与商品视觉服务</span><small>linkfox.com ↗</small></a>
-        <a href="https://www.superbrowser.com/blog/4662.html" target="_blank" rel="noopener noreferrer"><b>04</b><span>紫鸟 Agent：多源经营数据能力升级</span><small>superbrowser.com ↗</small></a>
-        <a href="https://www.superbrowser.com/blog/4710.html" target="_blank" rel="noopener noreferrer"><b>05</b><span>紫鸟 Agent：企业级团队能力升级</span><small>superbrowser.com ↗</small></a>
-        <a href="https://www.superbrowser.com/blog/6109.html" target="_blank" rel="noopener noreferrer"><b>06</b><span>紫鸟 Agent：两分钟巡检店铺健康</span><small>superbrowser.com ↗</small></a>
-        <a href="https://fzzixun.zhiye.com/jobs?activityGuid=caf7bf16-0398-4084-9278-32858b737084" target="_blank" rel="noopener noreferrer"><b>07</b><span>紫讯2027届校园招聘入口</span><small>fzzixun.zhiye.com ↗</small></a>
-        <a href="https://mp.weixin.qq.com/s/JvsYBuvFApVNdwzSFd8U6A" target="_blank" rel="noopener noreferrer"><b>08</b><span>紫讯2027届校园招聘官方推文</span><small>mp.weixin.qq.com ↗</small></a>
+        <a href="https://mp.weixin.qq.com/s/ezDfuXEGuen09wSysxA6Dg" target="_blank" rel="noopener noreferrer"><b>01</b><span>紫讯技术完成Pre-IPO轮融资</span><small>官方公众号 ↗</small></a>
+        <a href="https://applink.feishu.cn/T9ajPNilF8ql" target="_blank" rel="noopener noreferrer"><b>02</b><span>集团组织及人员调整通知</span><small>飞书内部 ↗</small></a>
+        <a href="https://applink.feishu.cn/T99NXi623VIb" target="_blank" rel="noopener noreferrer"><b>03</b><span>两大中心组织架构调整方案</span><small>飞书内部 ↗</small></a>
+        <a href="https://yxgb3sicy7.feishu.cn/wiki/MkROwLvqkiSiTPk4yjicZYiUnFg?from=from_copylink" target="_blank" rel="noopener noreferrer"><b>04</b><span>AI通识知识库</span><small>飞书知识库 ↗</small></a>
+        <a href="https://yxgb3sicy7.feishu.cn/wiki/ORB7wllsXi8unqkCJfIc1Cfxnrh" target="_blank" rel="noopener noreferrer"><b>05</b><span>AI销售增长驾驶舱案例Demo分享</span><small>飞书知识库 ↗</small></a>
+        <a href="https://yxgb3sicy7.feishuapp.com/app/app_17a329jdde9/post/e6d3e1a7-4699-4a9a-b01b-830b1a2bc0d1" target="_blank" rel="noopener noreferrer"><b>06</b><span>紫讯技术公益林正式立牌</span><small>紫讯圈 ↗</small></a>
+        <a href="https://yxgb3sicy7.feishuapp.com/app/app_17eg4uagsfh/" target="_blank" rel="noopener noreferrer"><b>07</b><span>紫讯圈“坦诚有回应”</span><small>飞书应用 ↗</small></a>
+        <a href="https://mp.weixin.qq.com/s/YQzwLOHiUBLLd4zuei8itQ" target="_blank" rel="noopener noreferrer"><b>08</b><span>中秋博饼活动推文</span><small>官方公众号 ↗</small></a>
+        <a href="https://yxgb3sicy7.feishu.cn/docx/L129dQQFVo5xLoxorFPc1JlOnrh" target="_blank" rel="noopener noreferrer"><b>09</b><span>项目上下文资产留存管理公告</span><small>飞书文档 ↗</small></a>
+        <a href="https://applink.feishu.cn/T99ZWZMryv26" target="_blank" rel="noopener noreferrer"><b>10</b><span>费用报销与差旅管理制度V4.0</span><small>飞书内部 ↗</small></a>
+        <a href="https://yxgb3sicy7.feishu.cn/wiki/CueXw9UpoiYzaiksRpvcAnlMnyh" target="_blank" rel="noopener noreferrer"><b>11</b><span>Q4 AI工具额度调整公告</span><small>飞书知识库 ↗</small></a>
       </div>
     </section>
 
     <footer>
-      <span>紫小讯月刊 · 2026年8月刊</span>
+      <span>紫小讯月刊 · 2026年10月刊</span>
+      <span>九月回顾 · 整理于 2026.10.06</span>
     </footer>
   </main>
+
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="图片大图预览" aria-hidden="true">
+    <button class="lightbox-close" type="button" aria-label="关闭大图">×</button>
+    <figure><img src="" alt=""><figcaption></figcaption></figure>
+  </div>
 
   <script>
     const progress = document.getElementById('progress');
@@ -990,6 +1213,41 @@
       });
     }, { threshold: .48 });
     document.querySelectorAll('.cover[id], .page[id]').forEach((section) => sectionObserver.observe(section));
+
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImage = lightbox.querySelector('img');
+    const lightboxCaption = lightbox.querySelector('figcaption');
+    const lightboxClose = lightbox.querySelector('.lightbox-close');
+    let lastFocusedImage = null;
+    const openLightbox = (image) => {
+      lastFocusedImage = image;
+      lightboxImage.src = image.currentSrc || image.src;
+      lightboxImage.alt = image.alt;
+      lightboxCaption.textContent = image.dataset.caption || image.alt;
+      lightbox.classList.add('open');
+      lightbox.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('lightbox-open');
+      lightboxClose.focus();
+    };
+    const closeLightbox = () => {
+      lightbox.classList.remove('open');
+      lightbox.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('lightbox-open');
+      lightboxImage.src = '';
+      if (lastFocusedImage) lastFocusedImage.focus();
+    };
+    document.querySelectorAll('.zoomable').forEach((image) => {
+      image.addEventListener('click', () => openLightbox(image));
+      image.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          openLightbox(image);
+        }
+      });
+    });
+    lightboxClose.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', (event) => { if (event.target === lightbox) closeLightbox(); });
+    addEventListener('keydown', (event) => { if (event.key === 'Escape' && lightbox.classList.contains('open')) closeLightbox(); });
   </script>
 </body>
 </html>
